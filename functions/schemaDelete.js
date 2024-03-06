@@ -22,7 +22,7 @@ export async function schemaDelete(search_query, json_class, name, all) {
     const path = data.pathArray;
 
     if(!path.length) {
-      throw new Error("No present Data found with the given query")
+      return null;
     }
 
     // Delete files based on the specified criteria.

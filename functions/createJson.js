@@ -23,7 +23,7 @@ export function createJson(schema, schemaPath, getRandomString) {
     if (err) {
       console.error("Error writing JSON file:", err);
     } else {
-      console.log(`JSON data has been written to ${schemaPath}`);
+      return;
     }
   });
 }

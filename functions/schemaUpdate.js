@@ -28,7 +28,7 @@ export async function schemaSave(data, query, json_class, name, all) {
     let pathResult = result.pathArray;
 
     if (!pathResult.length)
-      throw new Error("No present Data found with the given query");
+      return null;
 
     if (!all) {
       pathResult = pathResult[0];

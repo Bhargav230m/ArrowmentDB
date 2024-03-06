@@ -76,8 +76,6 @@ export async function searchWithQuery(search_query, json_class, name) {
 
     return { jsonFilesArray: emptyArray, pathArray: pathArray };
   } else {
-    throw new TypeError(
-      `${searchDirectory} doesn't exist, the folder has either been deleted or no data has yet been saved`
-    );
+    return { jsonFilesArray: emptyArray, pathArray: pathArray };
   }
 }
