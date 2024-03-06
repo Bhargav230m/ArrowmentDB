@@ -1,21 +1,32 @@
 {
-  "name": "personadb",
+  "name": "arrowment-db",
   "version": "1.0.0",
-  "description": "A simple database using json, similar to mongoose to store data",
+  "description": "An json type database similar to mongoose, uses JSON files to save data",
   "main": "index.js",
-  "type": "module",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bhargav230m/ArrowmentDB.git"
+  },
   "keywords": [
     "database",
-    "discord-bots",
+    "data",
+    "db",
     "json",
-    "fs"
+    "discord-bot",
+    "discord.js",
+    "ai",
+    "mongoose"
   ],
   "author": "TechPowerB",
   "license": "ISC",
-  "dependencies": {
-    "fs": "^0.0.1-security"
-  }
+  "bugs": {
+    "url": "https://github.com/Bhargav230m/ArrowmentDB/issues"
+  },
+  "homepage": "https://github.com/Bhargav230m/ArrowmentDB#readme"
 }

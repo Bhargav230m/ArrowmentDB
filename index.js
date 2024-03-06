@@ -1,5 +1,5 @@
-import { PersonaDB } from "./personaDb.js" 
+import { ArrowmentJsonDB } from "./arrowmentDB.js" 
 import { Schema } from "./schema.js"
 
-export { PersonaDB }
-export { Schema}
+export { ArrowmentJsonDB }
+export { Schema }

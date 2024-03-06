@@ -6,7 +6,7 @@
  * @param {Function} [options.string_generator] - A function used to generate random strings.
  * @throws {TypeError} If the `string_generator` option is provided but is not a function.
  */
-export class PersonaDB {
+export class ArrowmentJsonDB {
   /**
    * Creates a new PersonaDB instance.
    * @param {Object} options - The options used to create the PersonaDB instance.
