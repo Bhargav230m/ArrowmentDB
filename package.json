@@ -1,0 +1,21 @@
+{
+  "name": "personadb",
+  "version": "1.0.0",
+  "description": "A simple database using json, similar to mongoose to store data",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "database",
+    "discord-bots",
+    "json",
+    "fs"
+  ],
+  "author": "TechPowerB",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "^0.0.1-security"
+  }
+}

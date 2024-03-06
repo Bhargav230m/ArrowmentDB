@@ -1,0 +1,61 @@
+/**
+ * A database class for PersonaDB.
+ *
+ * @param {Object} options - The options used to create the PersonaDB instance.
+ * @param {String} options.data_dir - The directory where the data will be saved.
+ * @param {Function} [options.string_generator] - A function used to generate random strings.
+ * @throws {TypeError} If the `string_generator` option is provided but is not a function.
+ */
+export class PersonaDB {
+  /**
+   * Creates a new PersonaDB instance.
+   * @param {Object} options - The options used to create the PersonaDB instance.
+   * @param {String} options.data_dir - The directory where the data will be saved.
+   * @param {Function} [options.string_generator] - A function used to generate random strings.
+   */
+  constructor({ data_dir, string_generator }) {
+    /**
+     * The directory where the data will be saved.
+     * @type {String}
+     */
+    this.save_folder = data_dir;
+
+    /**
+     * A function used to generate random strings.
+     * @type {Function}
+     */
+    this.string_generator = string_generator || this.getRandomString.bind(this);
+
+    if (typeof this.string_generator !== "function") {
+      throw new TypeError("String Generator must be a function");
+    }
+  }
+
+  /**
+   * Generates a random string.
+   * @param {Number} [length=0] - The length of the string.
+   * @returns {String} The random string.
+   */
+  getRandomString(length) {
+    if (!length) length = 0;
+
+    const characters = "AaBbCcDdEeFfGgHhKkLlMmNnXxSsQq";
+    const id = process.pid;
+    let productKey = "";
+
+    for (let i = 0; i < length; i++) {
+      productKey += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+
+      const n = Math.floor(Math.random() * length);
+      productKey += n;
+    }
+
+    productKey += Date.now().toString().slice(0, 6);
+
+    productKey += id;
+
+    return productKey;
+  }
+}
