@@ -26,7 +26,7 @@ To start using Arrowment-DB in your project, follow these simple steps:
    export { jsonDB };
    ```
 
-   Replace `"path/to/your/data/directory"` with the actual path to the directory where you want to store your JSON data.
+   Replace `"path/to/your/data/directory"` with the actual path to the directory where you want to store your JSON data. **IT MUST BE ABSOLUTE PATH**
 
 4. Congratulations! You have set up your JSON database. Now you can create and manage your JSON data easily.
 
@@ -138,5 +138,7 @@ await info.updateAll(data, { Name: "John" });
 - Only `find` and `findAll` methods return something.
 - `find`, `save`, and `delete` methods operate on the first index of files in an array.
 - `find`, `findAll`, `save`, and `delete` methods return promises.
+- `find` and `findAll` functions return the filePath and fileData, `console.log` it for more information
+- Never add `ID` in the schema as we already create a id property which stores id of the file (randomString)
 
 And there we go! You now have a functioning JSON database using Arrowment-DB in your project. Enjoy managing your data effortlessly!
