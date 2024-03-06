@@ -1,6 +1,6 @@
 {
   "name": "arrowment-db",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An json type database similar to mongoose, uses JSON files to save data",
   "main": "index.js",
   "type": "module",
