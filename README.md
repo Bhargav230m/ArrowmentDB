@@ -42,20 +42,20 @@ To define a schema for your data, follow these steps:
 
 2. In the `schema` directory, create a new file (e.g., `myschema.js`).
 
-3. In the `myschema.js` file, define your schema using the `Schema` class:
+3. In the `myschema.js` file, define your schema using the `JsonSchema` class:
 
    ```javascript
    // myschema.js
 
    import { jsonDB } from "../jsonDB";
-   import { Schema } from "arrowment-db";
+   import { JsonSchema } from "arrowment-db";
 
    const data = {
        Name: String,
        Age: Number
    };
 
-   const info = new Schema({ schema: data, json_class: jsonDB, name: "Info" });
+   const info = new JsonSchema({ schema: data, json_class: jsonDB, name: "Info" });
    ```
 
    Make sure to replace `"../jsonDB"` with the actual path to your `jsonDB.js` file.
@@ -97,16 +97,16 @@ info.deleteAll({ Age: 13 });
 
 ### Finding Data
 
-To find data, use the `find` method:
+To find data, use the `findData` method:
 
 ```javascript
-const data = await info.find({ Age: 13 });
+const data = await info.findData({ Age: 13 });
 ```
 
-To find all records matching a query, use the `findAll` method:
+To find all records matching a query, use the `findAllData` method:
 
 ```javascript
-const data = await info.findAll({ Age: 13 });
+const data = await info.findAllData({ Age: 13 });
 ```
 
 ### Saving Data
@@ -114,8 +114,8 @@ const data = await info.findAll({ Age: 13 });
 To save data, use the `save` method:
 
 ```javascript
-const result = await info.find({ Age: 13 });
-const data = result.jsonFiles;
+const result = await info.findData({ Age: 13 });
+const data = result;
 
 data.Name = "The Rock";
 
@@ -125,20 +125,151 @@ await info.save(data, { Name: "John" });
 To update all records matching a query, use the `updateAll` method:
 
 ```javascript
-const result = await info.find({ Age: 13 });
-const data = result.jsonFiles;
+const result = await info.findData({ Age: 13 });
+const data = result;
 
 data.Name = "The Rock";
 
 await info.updateAll(data, { Name: "John" });
 ```
 
+### Finding Path
+
+To find a path, use `findPath`:
+
+```javascript
+console.log(await personalInfo.findPath({ name: "The Rock" }))
+/**
+ C:/Users/techn/OneDrive/Desktop/Projects/JSON-DB/test/data/PersonalInfo/l5G0U0t2Z7t4x9u5z0q6fd3357708145db3dfbb81709888536.json
+ */
+```
+
+To find all the paths, use `findAllPath`:
+
+```javascript
+console.log(await personalInfo.findAllPath({ name: "The Rock" }))
+/**
+[
+  'C:/Users/techn/OneDrive/Desktop/Projects/JSON-DB/test/data/PersonalInfo/l5G0U0t2Z7t4x9u5z0q6fd3357708145db3dfbb81709888536.json'
+]
+ */
+```
+
 ## Notes
+CHANGES IN 1.1.0
 
-- Only `find` and `findAll` methods return something.
-- `find`, `save`, and `delete` methods operate on the first index of files in an array.
-- `find`, `findAll`, `save`, and `delete` methods return promises.
-- `find` and `findAll` functions return the filePath and fileData, `console.log` it for more information
-- Never add `ID` in the schema as we already create a id property which stores id of the file (randomString)
+- All methods like `findData`, `findAllData`, `save`, `updateAll`, and their fuzzy versions now return something.
+- `findData`, `findAllData`, `save`, `updateAll`, `create`, and their fuzzy versions will return `null` if no data is found.
+- The methods `findData` and `findAllData` now return only the data, not an object containing the path and the data.
+- `findData` and `findAllData` methods return `null` if no data is found.
+- Methods `findPath` and `findAllPath` have been added to the `JsonSchema` class for finding paths.
+- Methods `findPath` and `findAllPath` return the file paths directly.
+- `fuzzySearchData`, `fuzzySearchAllData`, `fuzzySearchPath`, `fuzzySearchAllPath`, `fuzzyDelete`, `fuzzyDeleteAll`, `fuzzySave`, `fuzzyUpdateAll` methods have been added for fuzzy searching and operations.
 
-And there we go! You now have a functioning JSON database using Arrowment-DB in your project. Enjoy managing your data effortlessly!
+## Fuzzy Search Methods
+
+**What is fuzzy searching?**
+
+*Fuzzy searching is a searching method used when you don't have the exact query or only have a rough or approximate query. In such cases, instead of requiring an exact match, fuzzy searching employs algorithms like Levenshtein's algorithm to find the best match and retrieve relevant data. This approach allows for more flexible and forgiving searches, accommodating variations in spelling, typos, or slight deviations from the original query.*
+
+### Finding Data Using Fuzzy Method
+
+To find data using the fuzzy method, use `fuzzySearchData`:
+
+```javascript
+console.log(await personalInfo.fuzzySearchData({ name: "Jo" })); //We are not sure of the actual name
+/**
+  {
+  name: 'John',
+  Age: 13,
+  id: 'l5G0U0t2Z7t4x9u5z0q6fd3357708145db3dfbb81709888536'
+}
+ */
+```
+
+To search all the data and not just one data, use `fuzzySearchAllData`:
+
+```javascript
+console.log(await personalInfo.fuzzySearchAllData({ name: "Jo" })); //We are not sure of the actual name
+/**
+ [
+  {
+    name: 'John',
+    Age: 13,
+    id: 'l5G0U0t2Z7t4x9u5z0q6fd3357708145db3dfbb81709888536'
+  }
+]
+ */
+```
+
+### Finding Path
+
+To find the path using fuzzy search, use `fuzzySearchPath`:
+
+```javascript
+console.log(await personalInfo.fuzzySearchPath({ name: "Jo" })); //We are not sure of the actual name
+/**
+C:/Users/techn/OneDrive/Desktop/Projects/JSON-DB/test/data/PersonalInfo/l5G0U0t2Z7t4x9u5z0q6fd3357708145db3dfbb81709888536.json
+ */
+```
+
+To find all the paths using fuzzy search, use `fuzzySearchAllPath`:
+
+```javascript
+console.log(await personalInfo.fuzzySearchAllPath({ name: "Jo" })); //We are not sure of the actual name
+/**
+[
+  'C:/Users/techn/OneDrive/Desktop/Projects/JSON-DB/test/data/PersonalInfo/l5G0U0t2Z7t4x9u5z0q6fd3357708145db3dfbb81709888536.json'
+]
+ */
+```
+
+### Deleting Data
+
+To delete the data using fuzzy search, use `fuzzyDelete`:
+
+```javascript
+await personalInfo.fuzzyDelete({ name: "Jo" }); //We are not
+
+ sure of the actual name
+```
+
+To delete all the data using fuzzy search, use `fuzzyDeleteAll`:
+
+```javascript
+await personalInfo.fuzzyDeleteAll({ name: "Jo" }); //We are not sure of the actual name
+```
+
+### Updating Data
+
+To update one data using fuzzy search, use `fuzzySave`:
+
+```javascript
+const s = await personalInfo.fuzzySearchData({ name: "Jo"})
+s.name = "TechPowerB"
+
+console.log(await personalInfo.fuzzySave(s, { name: "Jo" })); //We are not sure of the actual name
+/**
+{
+  name: 'TechPowerB',
+  Age: 13,
+  id: 'l5G0U0t2Z7t4x9u5z0q6fd3357708145db3dfbb81709888536'
+}
+ */
+```
+
+To update everything using fuzzy search, use `fuzzyUpdateAll`:
+
+```javascript
+const s = await personalInfo.fuzzySearchData({ name: "Jo"})
+s.name = "TechPowerB"
+
+console.log(await personalInfo.fuzzyUpdateAll(s, { name: "Jo" })); //We are not sure of the actual name
+/**
+{
+  name: 'TechPowerB',
+  Age: 13,
+  id: 'l5G0U0t2Z7t4x9u5z0q6fd3357708145db3dfbb81709888536'
+}
+ */
+```

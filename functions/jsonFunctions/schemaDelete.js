@@ -7,9 +7,10 @@ import { searchWithQuery } from "./searchWithQuery.js";
  * @param {string} json_class - The JSON class to search within.
  * @param {string} name - The name to search for.
  * @param {boolean} all - Indicates whether to delete all matching files or just the first one found.
+ * @param {boolean} approximateSearch - Indicates whether to use levenshtein algorithm to search for files.
  * @throws {Error} If an error occurs during file deletion.
  */
-export async function schemaDelete(search_query, json_class, name, all) {
+export async function schemaDelete(search_query, json_class, name, all, approximateSearch) {
   /**
    * @typedef {Object} json_class
    * @property {string} save_folder - The directory where the JSON files are stored.
@@ -18,12 +19,11 @@ export async function schemaDelete(search_query, json_class, name, all) {
 
   try {
     // Search for files based on the provided query, class, and name.
-    const data = await searchWithQuery(search_query, json_class, name);
+    const data = await searchWithQuery(search_query, json_class, name, approximateSearch);
     const path = data.pathArray;
-
-    if(!path.length) {
-      return null;
-    }
+    
+    if(!path.length) return null;
+  
 
     // Delete files based on the specified criteria.
     if (all) {

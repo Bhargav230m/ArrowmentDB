@@ -4,14 +4,15 @@ import fs from "fs";
 /**
  * Saves new data to existing JSON files based on a search query.
  * @param {Object} data - The new data to be saved.
- * @param {string} query - The search query to find the JSON files to update.
- * @param {Object} json_class - The JSON class to search within.
- * @param {string} name - The name to search for.
+ * @param {Object} query - The search query to find the JSON files to update.
+ * @param {Object} json_class - The JSON class.
+ * @param {string} name - The name of the folder that contains the files
  * @param {boolean} all - Indicates whether to update all matching files or just the first one found.
+ * @param {approximateSearch} approximateSearch - Indicates whether to use levenshtein search to find all matching files
  * @throws {TypeError} If the data is not an object.
  * @throws {Error} If no data is found with the given query or an error occurs during file update.
  */
-export async function schemaSave(data, query, json_class, name, all) {
+export async function schemaSave(data, query, json_class, name, all, approximateSearch) {
   /**
    * @typedef {Object} json_class
    * @property {string} save_folder - The directory where the JSON files are stored.
@@ -23,12 +24,11 @@ export async function schemaSave(data, query, json_class, name, all) {
       throw new TypeError(`Data must be an object, and not an ${typeof data}`);
     }
 
-    const result = await searchWithQuery(query, json_class, name);
+    const result = await searchWithQuery(query, json_class, name, approximateSearch);
 
     let pathResult = result.pathArray;
 
-    if (!pathResult.length)
-      return null;
+    if (!pathResult.length) return null;
 
     if (!all) {
       pathResult = pathResult[0];
@@ -42,6 +42,8 @@ export async function schemaSave(data, query, json_class, name, all) {
   } catch (err) {
     throw new Error(err);
   }
+
+  return data;
 }
 
 /**

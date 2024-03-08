@@ -24,4 +24,6 @@ export function schemaCreate(data, schema, json_class, name) {
   } catch (err) {
     throw new Error(err);
   }
+
+  return data;
 }

@@ -1,5 +1,7 @@
-import { ArrowmentJsonDB } from "./arrowmentDB.js" 
-import { Schema } from "./schema.js"
+import { ArrowmentJsonDB } from "./jsonClass/arrowmentJsonDB.js" 
+import { generateRandomString } from "./functions/jsonFunctions/generateRandomString.js"
+import { JsonSchema } from "./jsonClass/jsonSchema.js"
 
 export { ArrowmentJsonDB }
-export { Schema }
+export { generateRandomString }
+export { JsonSchema }

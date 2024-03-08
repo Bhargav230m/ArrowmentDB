@@ -13,8 +13,16 @@ export function validateSchemaAndData(schema, data) {
         if (!(key in data)) {
           throw new Error(`Property '${key}' is missing`);
         }
+        if (typeof key === "string" && key.toLowerCase() === "id") {
+          throw new TypeError(
+            `Property '${key}' cannot be named 'id' as we use that property to save custom id's for the files`
+          );
+        }
         // Check if the type of the given data for the current property matches the expected type
-        if (typeof data[key] !== schema[key].name.toLowerCase()) {
+        let type;
+        if (schema[key].name.toLowerCase() === "array") type = "object";
+        else type = schema[key].name.toLowerCase();
+        if (typeof data[key] !== type) {
           throw new TypeError(
             `Type of '${key}' is ${typeof data[key]}, expected ${
               schema[key].name

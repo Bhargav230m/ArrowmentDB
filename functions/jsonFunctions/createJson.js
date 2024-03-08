@@ -5,6 +5,7 @@ import fs from "fs";
  * @param {Object} schema - The JSON schema to be saved as a JSON file.
  * @param {String} schemaPath - The path where the JSON file should be saved.
  * @param {Function} getRandomString - A function that returns a random string.
+ * @throws {Error} Throws an error if there is a error while writing data to the JSON file.
  */
 export function createJson(schema, schemaPath, getRandomString) {
   /**
@@ -13,17 +14,16 @@ export function createJson(schema, schemaPath, getRandomString) {
    * @returns {String} A randomly generated string of the specified length.
    */
 
-  schema.id = getRandomString(8);
+  const randomId = getRandomString(10);
+
+  schema.id = randomId
 
   const json_data = JSON.stringify(schema, null, 4);
-  const creationPath = schemaPath + "/" + getRandomString(10) + ".json";
+  const creationPath = schemaPath + "/" + randomId + ".json";
 
   // Write the JSON string to the file
   fs.writeFile(creationPath, json_data, (err) => {
-    if (err) {
-      console.error("Error writing JSON file:", err);
-    } else {
-      return;
-    }
+    if (err) throw err;
+    else return;
   });
 }

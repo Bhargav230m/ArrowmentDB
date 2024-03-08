@@ -1,3 +1,5 @@
+import { generateRandomString } from "../functions/jsonFunctions/generateRandomString.js";
+
 /**
  * A database class for PersonaDB.
  *
@@ -33,29 +35,10 @@ export class ArrowmentJsonDB {
 
   /**
    * Generates a random string.
-   * @param {Number} [length=0] - The length of the string.
+   * @param {Number} [length=10] - The length of the string.
    * @returns {String} The random string.
    */
   getRandomString(length) {
-    if (!length) length = 0;
-
-    const characters = "AaBbCcDdEeFfGgHhKkLlMmNnXxSsQq";
-    const id = process.pid;
-    let productKey = "";
-
-    for (let i = 0; i < length; i++) {
-      productKey += characters.charAt(
-        Math.floor(Math.random() * characters.length)
-      );
-
-      const n = Math.floor(Math.random() * length);
-      productKey += n;
-    }
-
-    productKey += Date.now().toString().slice(0, 6);
-
-    productKey += id;
-
-    return productKey;
+    return generateRandomString(length);
   }
 }

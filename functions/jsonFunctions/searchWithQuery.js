@@ -1,4 +1,5 @@
 import fs from "fs";
+import { findClosestString } from "../findClosestString.js";
 
 /**
  * Searches for JSON files in a directory based on a search query.
@@ -8,9 +9,13 @@ import fs from "fs";
  * @param {string} name - The name of the directory to search.
  * @returns {object} - An object containing the search results.
  * @throws {TypeError} If the search query is not an object or if there's an error during file reading.
- * @throws {Error} If the search directory doesn't exist or if there's an error during file parsing.
  */
-export async function searchWithQuery(search_query, json_class, name) {
+export async function searchWithQuery(
+  search_query,
+  json_class,
+  name,
+  approximateSearch
+) {
   /**
    * @typedef {Object} json_class
    * @property {string} save_folder - The directory where the JSON files are stored.
@@ -46,9 +51,21 @@ export async function searchWithQuery(search_query, json_class, name) {
                   );
                 } else {
                   const keys = Object.keys(search_query);
-                  const matches = keys.every(
-                    (key) => jsonData[key] === search_query[key]
-                  );
+                  let matches;
+
+                  if (approximateSearch) {
+                    const closest = findClosestString(
+                      search_query[key],
+                      jsonData[key]
+                    );
+
+                    if (closest.score > 0.45) matches = true;
+                    else matches = false;
+                  } else {
+                    matches = keys.every(
+                      (key) => jsonData[key] === search_query[key]
+                    );
+                  }
 
                   if (matches) {
                     const isDuplicate = emptyArray.some(
