@@ -156,7 +156,7 @@ console.log(await personalInfo.findAllPath({ name: "The Rock" }))
 ```
 
 ## Notes
-CHANGES IN 1.1.0
+CHANGES IN 1.2.0
 
 - All methods like `findData`, `findAllData`, `save`, `updateAll`, and their fuzzy versions now return something.
 - `findData`, `findAllData`, `save`, `updateAll`, `create`, and their fuzzy versions will return `null` if no data is found.
@@ -165,6 +165,8 @@ CHANGES IN 1.1.0
 - Methods `findPath` and `findAllPath` have been added to the `JsonSchema` class for finding paths.
 - Methods `findPath` and `findAllPath` return the file paths directly.
 - `fuzzySearchData`, `fuzzySearchAllData`, `fuzzySearchPath`, `fuzzySearchAllPath`, `fuzzyDelete`, `fuzzyDeleteAll`, `fuzzySave`, `fuzzyUpdateAll` methods have been added for fuzzy searching and operations.
+- Added QuickCollection, Its a map() like class but with fuzzy searching.
+- Added support for searching nested object structures.
 
 ## Fuzzy Search Methods
 

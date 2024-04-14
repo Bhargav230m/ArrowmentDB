@@ -1,7 +1,7 @@
-import { schemaCreate } from "../functions/jsonFunctions/schemaCreate.js";
-import { schemaDelete } from "../functions/jsonFunctions/schemaDelete.js";
-import { schemaFind } from "../functions/jsonFunctions/schemaFind.js";
-import { schemaSave } from "../functions/jsonFunctions/schemaUpdate.js";
+import { schemaCreate } from "../functions/jsonDB/schemaCreate.js";
+import { schemaDelete } from "../functions/jsonDB/schemaDelete.js";
+import { schemaFind } from "../functions/jsonDB/schemaFind.js";
+import { schemaSave } from "../functions/jsonDB/schemaUpdate.js";
 
 /**
  * Represents a schema for validating and manipulating JSON objects.
@@ -40,9 +40,9 @@ export class JsonSchema {
    * @returns {Object} The data used to update files is returned.
    * @throws {Error} If an error occurs during creation.
    */
-  create(data) {
+  async create(data) {
     try {
-      return schemaCreate(data, this.schema, this.json_class, this.name);
+      return await schemaCreate(data, this.schema, this.json_class, this.name);
     } catch (error) {
       throw new Error(error);
     }
@@ -87,7 +87,14 @@ export class JsonSchema {
    */
   async findData(search_query) {
     try {
-      return await schemaFind(search_query, this.json_class, this.name, false);
+      return await schemaFind(
+        search_query,
+        this.json_class,
+        this.name,
+        false,
+        false,
+        false
+      );
     } catch (error) {
       throw new Error(error);
     }
@@ -349,7 +356,7 @@ export class JsonSchema {
    * @param {number=1} count
    * @returns {Object} the data used to update files is returned.
    */
-  createMany(data, count) {
+  async createMany(data, count) {
     if (!count) count = 1; //Set the default count to 1
     if (count > 2000) {
       throw new RangeError(
@@ -359,7 +366,7 @@ export class JsonSchema {
 
     //Loop around and create the data
     for (let i = 0; i < count; i++) {
-      return schemaCreate(data, this.schema, this.json_class, this.name);
+      return await schemaCreate(data, this.schema, this.json_class, this.name);
     }
   }
 }

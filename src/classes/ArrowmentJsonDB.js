@@ -1,4 +1,4 @@
-import { generateRandomString } from "../functions/jsonFunctions/generateRandomString.js";
+import { generateRandomString } from "../functions/generateRandomString.js";
 
 /**
  * A database class for PersonaDB.

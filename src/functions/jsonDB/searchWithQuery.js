@@ -7,8 +7,8 @@ import { findClosestString } from "../findClosestString.js";
  * @param {object} search_query - The search query object.
  * @param {object} json_class - The JSON class object.
  * @param {string} name - The name of the directory to search.
- * @returns {object} - An object containing the search results.
- * @throws {TypeError} If the search query is not an object or if there's an error during file reading.
+ * @param {boolean} approximateSearch - Flag to enable approximate search.
+ * @param {object} schema - The schema used for creating the data
  */
 export async function searchWithQuery(
   search_query,
@@ -16,12 +16,6 @@ export async function searchWithQuery(
   name,
   approximateSearch
 ) {
-  /**
-   * @typedef {Object} json_class
-   * @property {string} save_folder - The directory where the JSON files are stored.
-   * @property {Function} getRandomString - A function to generate a random string.
-   */
-
   if (typeof search_query !== "object") {
     throw new TypeError(
       `Search Query must be an object, and not an ${typeof search_query}`
@@ -45,12 +39,12 @@ export async function searchWithQuery(
 
             for (const key in search_query) {
               if (search_query.hasOwnProperty(key)) {
-                if (!(key in search_query)) {
+                if (!(key in jsonData)) {
                   throw new TypeError(
-                    `Search Query '${search_query}' does not exist in ${filePath}`
+                    `Search Query '${search_query[key]}' does not exist in ${filePath}`
                   );
                 } else {
-                  const keys = Object.keys(search_query);
+                  // const keys = Object.keys(search_query);
                   let matches;
 
                   if (approximateSearch) {
@@ -58,31 +52,28 @@ export async function searchWithQuery(
                       search_query[key],
                       jsonData[key]
                     );
-
-                    if (closest.score > 0.45) matches = true;
-                    else matches = false;
+                    matches = closest.score > 0.45;
                   } else {
-                    matches = keys.every(
-                      (key) => jsonData[key] === search_query[key]
-                    );
+                    matches =
+                      JSON.stringify(jsonData[key]) ===
+                      JSON.stringify(search_query[key]);
                   }
 
-                  if (matches) {
-                    const isDuplicate = emptyArray.some(
-                      (existingData) =>
-                        JSON.stringify(existingData) ===
-                        JSON.stringify(jsonData)
-                    );
-
-                    if (!isDuplicate) {
-                      emptyArray.push(jsonData);
-                      pathArray.push(filePath);
-                    }
-                  } else {
+                  if (!matches) {
                     return null;
                   }
                 }
               }
+            }
+
+            const isDuplicate = emptyArray.some(
+              (existingData) =>
+                JSON.stringify(existingData) === JSON.stringify(jsonData)
+            );
+
+            if (!isDuplicate) {
+              emptyArray.push(jsonData);
+              pathArray.push(filePath);
             }
           } catch (err) {
             throw new Error(err);
@@ -96,3 +87,11 @@ export async function searchWithQuery(
     return { jsonFilesArray: emptyArray, pathArray: pathArray };
   }
 }
+
+// function isObject(variable) {
+//   return (
+//     !Array.isArray(variable) &&
+//     typeof variable === "object" &&
+//     variable !== null
+//   );
+// }

@@ -1,9 +1,13 @@
 {
   "name": "arrowment-db",
-  "version": "1.1.0",
-  "description": "An json type database similar to mongoose, uses JSON files to save data",
-  "main": "index.js",
+  "version": "1.2.0",
+  "description": "A JSON type database similar to Mongoose, uses JSON files to save data",
+  "main": "src/index.js",
   "type": "module",
+  "exports": {
+    "import": "./src/index.js",
+    "require": "./src/index.cjs"
+  },
   "directories": {
     "test": "test"
   },
@@ -29,5 +33,12 @@
   "bugs": {
     "url": "https://github.com/Bhargav230m/ArrowmentDB/issues"
   },
-  "homepage": "https://github.com/Bhargav230m/ArrowmentDB#readme"
+  "homepage": "https://github.com/Bhargav230m/ArrowmentDB#readme",
+  "devDependencies": {
+    "esm": "^3.2.25",
+    "mocha": "^10.3.0"
+  },
+  "dependencies": {
+    "chai": "^5.1.0"
+  }
 }
