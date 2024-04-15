@@ -1,4 +1,4 @@
-export let Operator = {
+module.exports = {
   GREATER: ">",
   LESSER: "<",
   GREATER_OR_EQUAL: ">=",

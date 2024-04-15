@@ -1,4 +1,4 @@
-import { fuzzy } from "./fuzzy.js";
+const { fuzzy } = require("./fuzzy.js");
 
 /**
  *
@@ -7,7 +7,7 @@ import { fuzzy } from "./fuzzy.js";
  * @param {boolean} fuzzySearch Where to Fuzzy search the data or not
  * @returns
  */
-export function find(key, mainDataObject, fuzzySearch) {
+function find(key, mainDataObject, fuzzySearch) {
   if (fuzzySearch) {
     const result = fuzzy(mainDataObject, key);
     if (result === null) return result;
@@ -19,3 +19,5 @@ export function find(key, mainDataObject, fuzzySearch) {
   if (!data) return null;
   else return data;
 }
+
+module.exports = { find };

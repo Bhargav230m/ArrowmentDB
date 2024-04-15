@@ -1,5 +1,5 @@
-import { createJson } from "./createJson.js";
-import fs from "fs";
+const { createJson } = require("./createJson.js");
+const fs = require("fs");
 
 /**
  * Creates a new data file in the given directory with the given name.
@@ -10,7 +10,7 @@ import fs from "fs";
  * @param {string} name - The name of the file to be created
  * @throws {TypeError} If the data directory specified by `json_class.save_folder` does not exist
  */
-export function createData(data, json_class, name) {
+function createData(data, json_class, name) {
   /**
    * @typedef {Object} JsonClass
    * @property {string} save_folder - The directory where the data will be saved
@@ -33,3 +33,5 @@ export function createData(data, json_class, name) {
     throw new TypeError(`Data Directory ${mainPath} does not exist`);
   }
 }
+
+module.exports = { createData };

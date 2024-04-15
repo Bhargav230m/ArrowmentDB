@@ -1,11 +1,11 @@
-import crypto from "crypto";
+const crypto = require("crypto");
 
 /**
  * Generate a random string of a given length
  * @param {number} length - The length of the random string
  * @returns {string} - The random string
  */
-export function generateRandomString(length) {
+function generateRandomString(length) {
   if (!length) length = 10;
 
   const characters = "AaBbCcDdEeFfGgHhKkLlMmNnXxSsQqSsTtUuZz";
@@ -29,3 +29,5 @@ export function generateRandomString(length) {
 
   return string;
 }
+
+module.exports = { generateRandomString };

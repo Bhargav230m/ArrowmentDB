@@ -1,4 +1,6 @@
-import { generateRandomString } from "../functions/generateRandomString.js";
+const {
+  generateRandomString,
+} = require("../functions/generateRandomString.js");
 
 /**
  * A database class for PersonaDB.
@@ -8,7 +10,7 @@ import { generateRandomString } from "../functions/generateRandomString.js";
  * @param {Function} [options.string_generator] - A function used to generate random strings.
  * @throws {TypeError} If the `string_generator` option is provided but is not a function.
  */
-export class ArrowmentJsonDB {
+class ArrowmentJsonDB {
   /**
    * Creates a new PersonaDB instance.
    * @param {Object} options - The options used to create the PersonaDB instance.
@@ -38,7 +40,9 @@ export class ArrowmentJsonDB {
    * @param {Number} [length=10] - The length of the string.
    * @returns {String} The random string.
    */
-  getRandomString(length) {
+  getRandomString(length = 10) {
     return generateRandomString(length);
   }
 }
+
+module.exports = { ArrowmentJsonDB };

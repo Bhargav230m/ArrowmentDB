@@ -1,4 +1,4 @@
-import { QuickCollection } from "../../src/classes/QuickCollection.js"; // Adjust the path as needed
+const { QuickCollection } = require("../../src/classes/QuickCollection.js"); // Adjust the path as needed
 
 const testAdd = () => {
   const collection = new QuickCollection();
@@ -86,7 +86,7 @@ const testFuzzyUpdate = () => {
   collection.add("user1", initialData);
   collection.fuzzyUpdate("use", updatedData);
   const result = collection.find("user1");
-    if (result !== updatedData) {
+  if (result !== updatedData) {
     console.error("Test failed: fuzzyUpdate() method");
   } else {
     console.log("Test passed: fuzzyUpdate() method");

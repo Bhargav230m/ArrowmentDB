@@ -1,9 +1,9 @@
 {
-  "name": "arrowment-db",
-  "version": "1.2.0",
+  "name": "arrowment-db-commonjs",
+  "version": "1.2.2",
   "description": "A JSON type database similar to Mongoose, uses JSON files to save data",
-  "main": "src/index.js",
-  "type": "module",
+  "main": "src/index.cjs",
+  "type": "commonjs",
   "exports": {
     "import": "./src/index.js",
     "require": "./src/index.cjs"
@@ -12,7 +12,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "node test/script.mjs"
+    "test": "node test/script.js"
   },
   "repository": {
     "type": "git",

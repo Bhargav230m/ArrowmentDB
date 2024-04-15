@@ -5,7 +5,7 @@
  * @throws {Error} If any property specified in the schema is missing in the data.
  * @throws {TypeError} If the type of any property in the data does not match the expected type specified in the schema.
  */
-export function validateSchemaAndData(schema, data) {
+function validateSchemaAndData(schema, data) {
   try {
     for (const key in schema) {
       if (schema.hasOwnProperty(key)) {
@@ -35,3 +35,5 @@ export function validateSchemaAndData(schema, data) {
     throw new Error(err);
   }
 }
+
+module.exports = { validateSchemaAndData };

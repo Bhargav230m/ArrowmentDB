@@ -1,4 +1,4 @@
-import { searchWithQuery } from "./searchWithQuery.js";
+const { searchWithQuery } = require("./searchWithQuery.js");
 
 /**
  * This function searches for data using a query and returns results based on specified parameters.
@@ -10,9 +10,21 @@ import { searchWithQuery } from "./searchWithQuery.js";
  * @param {boolean} approximateSearch - Flag indicating whether to use levenshtein algorithm to find data.
  * @returns {string || array} - An string or array containing the search results.
  */
-export async function schemaFind(query, json_class, name, all, path, approximateSearch) {
+async function schemaFind(
+  query,
+  json_class,
+  name,
+  all,
+  path,
+  approximateSearch
+) {
   // Call the searchWithQuery function to get the search results
-  const result = await searchWithQuery(query, json_class, name, approximateSearch);
+  const result = await searchWithQuery(
+    query,
+    json_class,
+    name,
+    approximateSearch
+  );
 
   // Extract the JSON files array and path array from the search result
   const dataResult = result.jsonFilesArray;
@@ -30,3 +42,5 @@ export async function schemaFind(query, json_class, name, all, path, approximate
     else return dataResult;
   }
 }
+
+module.exports = { schemaFind };
