@@ -1,5 +1,5 @@
 {
-  "name": "arrowment-db-commonjs",
+  "name": "@1blckhrt/arrowment-db-commonjs",
   "version": "1.2.0",
   "description": "A JSON type database similar to Mongoose, uses JSON files to save data",
   "main": "src/index.cjs",
