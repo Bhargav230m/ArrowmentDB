@@ -3,7 +3,7 @@ const {
 } = require("../functions/generateRandomString.js");
 const { primary } = require("../functions/quickCollection/primary.js");
 
-module.exports = class QuickCollection {
+class QuickCollection {
   /**
    *
    * @param {boolean} include_default_parameters
@@ -112,4 +112,6 @@ module.exports = class QuickCollection {
   fuzzyDuplicate(key, count) {
     return primary(9, this.data, key, undefined, count);
   }
-};
+}
+
+module.exports = { QuickCollection };

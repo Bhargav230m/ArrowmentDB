@@ -45,4 +45,4 @@ class ArrowmentJsonDB {
   }
 }
 
-module.exports = ArrowmentJsonDB;
+module.exports = { ArrowmentJsonDB };

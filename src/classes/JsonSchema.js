@@ -386,4 +386,4 @@ class JsonSchema {
 }
 
 // Why are you here? Found a bug? Report here https://github.com/Bhargav230m/ArrowmentDB/issues.
-module.exports = JsonSchema;
+module.exports = { JsonSchema };
