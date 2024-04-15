@@ -1,5 +1,5 @@
-import { createData } from "./createData.js";
-import { validateSchemaAndData } from "./validateSchemaAndData.js";
+const { createData } = require("./createData.js");
+const { validateSchemaAndData } = require("./validateSchemaAndData.js");
 
 /**
  * Creates an instance of a JSON object based on the given data and schema.
@@ -9,7 +9,7 @@ import { validateSchemaAndData } from "./validateSchemaAndData.js";
  * @param {String} name - The name of the JSON object.
  * @throws {Error} If there's an error during schema validation or JSON object creation.
  */
-export function schemaCreate(data, schema, json_class, name) {
+function schemaCreate(data, schema, json_class, name) {
   /**
    * @typedef {Class} json_class
    * @property {string} save_folder - The directory where the data will be saved
@@ -27,3 +27,5 @@ export function schemaCreate(data, schema, json_class, name) {
 
   return data;
 }
+
+module.exports = { schemaCreate };

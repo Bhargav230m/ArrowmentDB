@@ -1,5 +1,5 @@
-import fs from "fs";
-import { findClosestString } from "../findClosestString.js";
+const fs = require("fs");
+const { findClosestString } = require("../findClosestString.js");
 
 /**
  * Searches for JSON files in a directory based on a search query.
@@ -10,7 +10,7 @@ import { findClosestString } from "../findClosestString.js";
  * @param {boolean} approximateSearch - Flag to enable approximate search.
  * @param {object} schema - The schema used for creating the data
  */
-export async function searchWithQuery(
+async function searchWithQuery(
   search_query,
   json_class,
   name,
@@ -44,7 +44,6 @@ export async function searchWithQuery(
                     `Search Query '${search_query[key]}' does not exist in ${filePath}`
                   );
                 } else {
-                  // const keys = Object.keys(search_query);
                   let matches;
 
                   if (approximateSearch) {
@@ -88,10 +87,4 @@ export async function searchWithQuery(
   }
 }
 
-// function isObject(variable) {
-//   return (
-//     !Array.isArray(variable) &&
-//     typeof variable === "object" &&
-//     variable !== null
-//   );
-// }
+module.exports = { searchWithQuery };

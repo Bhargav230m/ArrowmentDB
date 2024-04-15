@@ -1,7 +1,7 @@
-import { expect } from 'chai';
-import { QuickCollection } from '../../src/classes/QuickCollection.js';
+const { expect } = require("chai");
+const { QuickCollection } = require("../../src/classes/QuickCollection.js");
 
-describe('QuickCollection', () => {
+describe("QuickCollection", () => {
   let collection;
 
   // Before each test, create a new QuickCollection instance
@@ -10,8 +10,8 @@ describe('QuickCollection', () => {
   });
 
   // Test cases for the add() method
-  describe('#add()', () => {
-    it('should add data to the collection', () => {
+  describe("#add()", () => {
+    it("should add data to the collection", () => {
       const data = { name: "John", age: 30 };
       collection.add("user1", data);
       const result = collection.find("user1");
@@ -20,8 +20,8 @@ describe('QuickCollection', () => {
   });
 
   // Test cases for the delete() method
-  describe('#delete()', () => {
-    it('should delete data from the collection', () => {
+  describe("#delete()", () => {
+    it("should delete data from the collection", () => {
       const data = { name: "John", age: 30 };
       collection.add("user1", data);
       const result = collection.delete("user1");
@@ -31,8 +31,8 @@ describe('QuickCollection', () => {
   });
 
   // Test cases for the update() method
-  describe('#update()', () => {
-    it('should update data in the collection', () => {
+  describe("#update()", () => {
+    it("should update data in the collection", () => {
       const initialData = { name: "John", age: 30 };
       const updatedData = { name: "Jane", age: 35 };
       collection.add("user1", initialData);
@@ -43,8 +43,8 @@ describe('QuickCollection', () => {
   });
 
   // Test cases for the find() method
-  describe('#find()', () => {
-    it('should find data in the collection', () => {
+  describe("#find()", () => {
+    it("should find data in the collection", () => {
       const data = { name: "John", age: 30 };
       collection.add("user1", data);
       const result = collection.find("user1");
@@ -53,8 +53,8 @@ describe('QuickCollection', () => {
   });
 
   // Test cases for the duplicate() method
-  describe('#duplicate()', () => {
-    it('should duplicate data in the collection', () => {
+  describe("#duplicate()", () => {
+    it("should duplicate data in the collection", () => {
       const data = { name: "John", age: 30 };
       collection.add("user1", data);
       collection.duplicate("user1", 3);
@@ -65,8 +65,8 @@ describe('QuickCollection', () => {
   });
 
   // Test cases for the fuzzyDelete() method
-  describe('#fuzzyDelete()', () => {
-    it('should delete data from the collection with fuzzy key', () => {
+  describe("#fuzzyDelete()", () => {
+    it("should delete data from the collection with fuzzy key", () => {
       const data = { name: "John", age: 30 };
       collection.add("user1", data);
       collection.fuzzyDelete("use");
@@ -76,8 +76,8 @@ describe('QuickCollection', () => {
   });
 
   // Test cases for the fuzzyUpdate() method
-  describe('#fuzzyUpdate()', () => {
-    it('should update data in the collection with fuzzy key', () => {
+  describe("#fuzzyUpdate()", () => {
+    it("should update data in the collection with fuzzy key", () => {
       const initialData = { name: "John", age: 30 };
       const updatedData = { name: "Jane", age: 35 };
       collection.add("user1", initialData);
@@ -88,8 +88,8 @@ describe('QuickCollection', () => {
   });
 
   // Test cases for the fuzzyFind() method
-  describe('#fuzzyFind()', () => {
-    it('should find data in the collection with fuzzy key', () => {
+  describe("#fuzzyFind()", () => {
+    it("should find data in the collection with fuzzy key", () => {
       const data = { name: "John", age: 30 };
       collection.add("user1", data);
       const result = collection.fuzzyFind("use");
@@ -98,8 +98,8 @@ describe('QuickCollection', () => {
   });
 
   // Test cases for the fuzzyDuplicate() method
-  describe('#fuzzyDuplicate()', () => {
-    it('should duplicate data in the collection with fuzzy key', () => {
+  describe("#fuzzyDuplicate()", () => {
+    it("should duplicate data in the collection with fuzzy key", () => {
       const data = { name: "John", age: 30 };
       collection.add("user1", data);
       collection.fuzzyDuplicate("use", 3);
@@ -108,5 +108,4 @@ describe('QuickCollection', () => {
       expect(result.length).to.equal(4); // Original + 3 duplicates
     });
   });
-
 });

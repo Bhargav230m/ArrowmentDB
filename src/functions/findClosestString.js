@@ -7,7 +7,7 @@
  * @returns {{score: number, closestItem: string|object}} An object containing the score
  *   (between 0 and 1) and the closest string or object to the target string.
  */
-export function findClosestString(target, array) {
+function findClosestString(target, array) {
   try {
     let minDistance = Infinity;
     let closestItem = "";
@@ -128,3 +128,5 @@ function computeLevenshteinDistance(a, b) {
 
   return matrix[b.length][a.length];
 }
+
+module.exports = { findClosestString };

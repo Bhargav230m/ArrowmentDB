@@ -1,4 +1,4 @@
-import fs from "fs";
+const fs = require("fs");
 
 /**
  * Creates a JSON file with the given schema and saves it to the given schema path.
@@ -7,7 +7,7 @@ import fs from "fs";
  * @param {Function} getRandomString - A function that returns a random string.
  * @throws {Error} Throws an error if there is a error while writing data to the JSON file.
  */
-export function createJson(schema, schemaPath, getRandomString) {
+function createJson(schema, schemaPath, getRandomString) {
   /**
    * @typedef {Function} getRandomString
    * @param {Number} length - The length of the random string to be generated.
@@ -16,7 +16,7 @@ export function createJson(schema, schemaPath, getRandomString) {
 
   const randomId = getRandomString(10);
 
-  schema.id = randomId
+  schema.id = randomId;
 
   const json_data = JSON.stringify(schema, null, 4);
   const creationPath = schemaPath + "/" + randomId + ".json";
@@ -27,3 +27,5 @@ export function createJson(schema, schemaPath, getRandomString) {
     else return;
   });
 }
+
+module.exports = { createJson };

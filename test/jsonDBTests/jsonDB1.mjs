@@ -1,5 +1,5 @@
-import { ArrowmentJsonDB } from "../../src/classes/ArrowmentJsonDB.js";
-import { JsonSchema } from "../../src/classes/JsonSchema.js";
+const { ArrowmentJsonDB } = require("../../src/classes/ArrowmentJsonDB.js");
+const { JsonSchema } = require("../../src/classes/JsonSchema.js");
 
 const jsonDB = new ArrowmentJsonDB({
   data_dir: "C:/Users/techn/OneDrive/Desktop/Projects/JSON-DB/test/data",

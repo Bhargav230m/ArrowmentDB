@@ -1,5 +1,5 @@
-import { generateRandomString } from "../generateRandomString.js";
-import { fuzzy } from "./fuzzy.js";
+const { generateRandomString } = require("../generateRandomString.js");
+const { fuzzy } = require("./fuzzy.js");
 
 /**
  *
@@ -8,7 +8,7 @@ import { fuzzy } from "./fuzzy.js";
  * @param {boolean} fuzzySearch Where to Fuzzy search the data or not
  * @returns
  */
-export function duplicate(key, mainDataObject, fuzzySearch) {
+function duplicate(key, mainDataObject, fuzzySearch) {
   if (fuzzySearch) {
     const result = fuzzy(mainDataObject, key);
     if (result === null) return false;
@@ -22,3 +22,5 @@ export function duplicate(key, mainDataObject, fuzzySearch) {
     mainDataObject.availableData[generateRandomString(5)] = data;
   }
 }
+
+module.exports = { duplicate };

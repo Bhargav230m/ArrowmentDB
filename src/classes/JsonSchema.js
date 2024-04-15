@@ -1,12 +1,12 @@
-import { schemaCreate } from "../functions/jsonDB/schemaCreate.js";
-import { schemaDelete } from "../functions/jsonDB/schemaDelete.js";
-import { schemaFind } from "../functions/jsonDB/schemaFind.js";
-import { schemaSave } from "../functions/jsonDB/schemaUpdate.js";
+const { schemaCreate } = require("../functions/jsonDB/schemaCreate.js");
+const { schemaDelete } = require("../functions/jsonDB/schemaDelete.js");
+const { schemaFind } = require("../functions/jsonDB/schemaFind.js");
+const { schemaSave } = require("../functions/jsonDB/schemaUpdate.js");
 
 /**
  * Represents a schema for validating and manipulating JSON objects.
  */
-export class JsonSchema {
+class JsonSchema {
   /**
    * Creates a new Schema instance.
    * @param {Object} options - The options used to create the Schema instance.
@@ -59,6 +59,7 @@ export class JsonSchema {
         search_query,
         this.json_class,
         this.name,
+        false,
         false
       );
     } catch (error) {
@@ -73,7 +74,13 @@ export class JsonSchema {
    */
   async deleteAll(search_query) {
     try {
-      return await schemaDelete(search_query, this.json_class, this.name, true);
+      return await schemaDelete(
+        search_query,
+        this.json_class,
+        this.name,
+        true,
+        false
+      );
     } catch (error) {
       throw new Error(error);
     }
@@ -108,7 +115,14 @@ export class JsonSchema {
    */
   async findAllData(search_query) {
     try {
-      return await schemaFind(search_query, this.json_class, this.name, true);
+      return await schemaFind(
+        search_query,
+        this.json_class,
+        this.name,
+        true,
+        false,
+        false
+      );
     } catch (error) {
       throw new Error(error);
     }
@@ -371,4 +385,5 @@ export class JsonSchema {
   }
 }
 
-//Why are you here? Found a bug? Report here https://github.com/Bhargav230m/ArrowmentDB/issues.
+// Why are you here? Found a bug? Report here https://github.com/Bhargav230m/ArrowmentDB/issues.
+module.exports = JsonSchema;

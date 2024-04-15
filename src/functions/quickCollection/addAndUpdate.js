@@ -1,4 +1,4 @@
-import { fuzzy } from "./fuzzy.js";
+const { fuzzy } = require("./fuzzy.js");
 
 /**
  Adds or Updates the specified property from the given object
@@ -8,13 +8,7 @@ import { fuzzy } from "./fuzzy.js";
  * @param {boolean} update Wheter to update or just add
  * @param {boolean} fuzzySearch Whether to fuzzy search or not
  */
-export async function addAndUpdate(
-  data,
-  mainDataObject,
-  key,
-  update,
-  fuzzySearch
-) {
+async function addAndUpdate(data, mainDataObject, key, update, fuzzySearch) {
   if (!data) throw new Error("No data was provided");
 
   if (!update && mainDataObject.availableData[key]) {
@@ -34,3 +28,5 @@ export async function addAndUpdate(
   mainDataObject.lastUpdated = Date.now();
   return (mainDataObject.availableData[key] = data);
 }
+
+module.exports = { addAndUpdate };

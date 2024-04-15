@@ -1,5 +1,5 @@
-import { searchWithQuery } from "./searchWithQuery.js";
-import fs from "fs";
+const { searchWithQuery } = require("./searchWithQuery.js");
+const fs = require("fs");
 
 /**
  * Saves new data to existing JSON files based on a search query.
@@ -12,19 +12,25 @@ import fs from "fs";
  * @throws {TypeError} If the data is not an object.
  * @throws {Error} If no data is found with the given query or an error occurs during file update.
  */
-export async function schemaSave(data, query, json_class, name, all, approximateSearch) {
-  /**
-   * @typedef {Object} json_class
-   * @property {string} save_folder - The directory where the JSON files are stored.
-   * @property {Function} getRandomString - A function to generate a random string.
-   */
-
+async function schemaSave(
+  data,
+  query,
+  json_class,
+  name,
+  all,
+  approximateSearch
+) {
   try {
     if (typeof data !== "object") {
       throw new TypeError(`Data must be an object, and not an ${typeof data}`);
     }
 
-    const result = await searchWithQuery(query, json_class, name, approximateSearch);
+    const result = await searchWithQuery(
+      query,
+      json_class,
+      name,
+      approximateSearch
+    );
 
     let pathResult = result.pathArray;
 
@@ -35,9 +41,9 @@ export async function schemaSave(data, query, json_class, name, all, approximate
 
       await update(pathResult, data);
     } else {
-      pathResult.forEach(async (path) => {
+      for (const path of pathResult) {
         await update(path, data);
-      });
+      }
     }
   } catch (err) {
     throw new Error(err);
@@ -52,35 +58,40 @@ export async function schemaSave(data, query, json_class, name, all, approximate
  * @param {Object} newData - The new data to be merged with existing data.
  * @throws {Error} If an error occurs during file reading, parsing, or writing.
  */
-async function update(pathResult, newData) {
-  fs.readFile(pathResult, "utf8", (err, data) => {
-    if (err) {
-      if (err) throw err;
-    }
+function update(pathResult, newData) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(pathResult, "utf8", (err, data) => {
+      if (err) {
+        return reject(err);
+      }
 
-    try {
-      const jsonData = JSON.parse(data);
-      const keysToRemove = Object.keys(jsonData).filter((key) => key !== "id");
-      const filteredData = {};
-      keysToRemove.forEach((key) => {
-        filteredData[key] = jsonData[key];
-      });
+      try {
+        const jsonData = JSON.parse(data);
+        const keysToRemove = Object.keys(jsonData).filter(
+          (key) => key !== "id"
+        );
+        const filteredData = {};
+        keysToRemove.forEach((key) => {
+          filteredData[key] = jsonData[key];
+        });
 
-      const lastKey = Object.keys(jsonData).find((key) => key === "id");
-      const lastValue = jsonData[lastKey];
-      const updatedData = { [lastKey]: lastValue };
+        const lastKey = Object.keys(jsonData).find((key) => key === "id");
+        const lastValue = jsonData[lastKey];
+        const updatedData = { [lastKey]: lastValue, ...newData };
 
-      Object.assign(updatedData, newData);
-
-      fs.writeFile(
-        pathResult,
-        JSON.stringify(Object.assign({}, filteredData, updatedData), null, 4),
-        (err) => {
-          if (err) throw err;
-        }
-      );
-    } catch (error) {
-      throw new Error(error);
-    }
+        fs.writeFile(
+          pathResult,
+          JSON.stringify({ ...filteredData, ...updatedData }, null, 4),
+          (err) => {
+            if (err) return reject(err);
+            resolve();
+          }
+        );
+      } catch (error) {
+        reject(error);
+      }
+    });
   });
 }
+
+module.exports = { schemaSave };

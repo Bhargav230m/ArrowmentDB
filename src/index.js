@@ -1,7 +1,9 @@
-import { ArrowmentJsonDB } from "./classes/arrowmentJsonDB.js" 
-import { generateRandomString } from "./functions/generateRandomString.js"
-import { JsonSchema } from "./classes/jsonSchema.js"
+const { ArrowmentJsonDB } = require("./classes/arrowmentJsonDB.js");
+const { generateRandomString } = require("./functions/generateRandomString.js");
+const { JsonSchema } = require("./classes/jsonSchema.js");
 
-export { ArrowmentJsonDB }
-export { generateRandomString }
-export { JsonSchema }
+module.exports = {
+  ArrowmentJsonDB,
+  generateRandomString,
+  JsonSchema,
+};
