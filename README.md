@@ -1,5 +1,9 @@
 # Arrowment-DB
 
+# CommonJS conversion by 1blckhrt
+
+# Original code by Bhargav230m
+
 Arrowment-DB is a simple JSON database library for Node.js projects, similar to Mongoose but with a focus on simplicity and ease of use.
 
 ## Getting Started
@@ -19,11 +23,13 @@ To start using Arrowment-DB in your project, follow these simple steps:
    ```javascript
    // jsonDB.js
 
-   import { ArrowmentJsonDB } from "arrowment-db";
+   const { ArrowmentJsonDB } = require("arrowment-db");
 
-   const jsonDB = new ArrowmentJsonDB({ data_dir: "path/to/your/data/directory" });
+   const jsonDB = new ArrowmentJsonDB({
+     data_dir: "path/to/your/data/directory",
+   });
 
-   export { jsonDB };
+   module.exports = { jsonDB };
    ```
 
    Replace `"path/to/your/data/directory"` with the actual path to the directory where you want to store your JSON data. **IT MUST BE ABSOLUTE PATH**
@@ -47,15 +53,19 @@ To define a schema for your data, follow these steps:
    ```javascript
    // myschema.js
 
-   import { jsonDB } from "../jsonDB";
-   import { JsonSchema } from "arrowment-db";
+   const { jsonDB } = require("../jsonDB");
+   const { JsonSchema } = require("arrowment-db");
 
    const data = {
-       Name: String,
-       Age: Number
+     Name: String,
+     Age: Number,
    };
 
-   const info = new JsonSchema({ schema: data, json_class: jsonDB, name: "Info" });
+   const info = new JsonSchema({
+     schema: data,
+     json_class: jsonDB,
+     name: "Info",
+   });
    ```
 
    Make sure to replace `"../jsonDB"` with the actual path to your `jsonDB.js` file.
@@ -68,14 +78,14 @@ Once you have set up your schema, you can start managing your data. Here's how:
 
 ### Creating Data
 
-To create data, simply import the schema and use the `create` method:
+To create data, simply const the schema and use the `create` method:
 
 ```javascript
-import { info } from "./schema/mySchema.js";
+const { info } = require("./schema/mySchema.js");
 
 info.create({
-    Name: "John",
-    Age: 13
+  Name: "John",
+  Age: 13,
 });
 ```
 
@@ -84,7 +94,7 @@ info.create({
 To delete data, specify the query and use the `delete` method:
 
 ```javascript
-import { info } from "./schema/mySchema.js";
+const { info } = require("./schema/mySchema.js");
 
 info.delete({ Age: 13 });
 ```
@@ -138,7 +148,7 @@ await info.updateAll(data, { Name: "John" });
 To find a path, use `findPath`:
 
 ```javascript
-console.log(await personalInfo.findPath({ name: "The Rock" }))
+console.log(await personalInfo.findPath({ name: "The Rock" }));
 /**
  C:/Users/techn/OneDrive/Desktop/Projects/JSON-DB/test/data/PersonalInfo/l5G0U0t2Z7t4x9u5z0q6fd3357708145db3dfbb81709888536.json
  */
@@ -147,7 +157,7 @@ console.log(await personalInfo.findPath({ name: "The Rock" }))
 To find all the paths, use `findAllPath`:
 
 ```javascript
-console.log(await personalInfo.findAllPath({ name: "The Rock" }))
+console.log(await personalInfo.findAllPath({ name: "The Rock" }));
 /**
 [
   'C:/Users/techn/OneDrive/Desktop/Projects/JSON-DB/test/data/PersonalInfo/l5G0U0t2Z7t4x9u5z0q6fd3357708145db3dfbb81709888536.json'
@@ -156,6 +166,7 @@ console.log(await personalInfo.findAllPath({ name: "The Rock" }))
 ```
 
 ## Notes
+
 CHANGES IN 1.2.0
 
 - All methods like `findData`, `findAllData`, `save`, `updateAll`, and their fuzzy versions now return something.
@@ -172,7 +183,7 @@ CHANGES IN 1.2.0
 
 **What is fuzzy searching?**
 
-*Fuzzy searching is a searching method used when you don't have the exact query or only have a rough or approximate query. In such cases, instead of requiring an exact match, fuzzy searching employs algorithms like Levenshtein's algorithm to find the best match and retrieve relevant data. This approach allows for more flexible and forgiving searches, accommodating variations in spelling, typos, or slight deviations from the original query.*
+_Fuzzy searching is a searching method used when you don't have the exact query or only have a rough or approximate query. In such cases, instead of requiring an exact match, fuzzy searching employs algorithms like Levenshtein's algorithm to find the best match and retrieve relevant data. This approach allows for more flexible and forgiving searches, accommodating variations in spelling, typos, or slight deviations from the original query._
 
 ### Finding Data Using Fuzzy Method
 
@@ -247,8 +258,8 @@ await personalInfo.fuzzyDeleteAll({ name: "Jo" }); //We are not sure of the actu
 To update one data using fuzzy search, use `fuzzySave`:
 
 ```javascript
-const s = await personalInfo.fuzzySearchData({ name: "Jo"})
-s.name = "TechPowerB"
+const s = await personalInfo.fuzzySearchData({ name: "Jo" });
+s.name = "TechPowerB";
 
 console.log(await personalInfo.fuzzySave(s, { name: "Jo" })); //We are not sure of the actual name
 /**
@@ -263,8 +274,8 @@ console.log(await personalInfo.fuzzySave(s, { name: "Jo" })); //We are not sure 
 To update everything using fuzzy search, use `fuzzyUpdateAll`:
 
 ```javascript
-const s = await personalInfo.fuzzySearchData({ name: "Jo"})
-s.name = "TechPowerB"
+const s = await personalInfo.fuzzySearchData({ name: "Jo" });
+s.name = "TechPowerB";
 
 console.log(await personalInfo.fuzzyUpdateAll(s, { name: "Jo" })); //We are not sure of the actual name
 /**
